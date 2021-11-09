@@ -34,6 +34,7 @@ from torch.autograd import Variable
 from tqdm import trange
 from transformers import GPT2Tokenizer
 from transformers.file_utils import cached_path
+# from transformers.models.gpt2.modeling_gpt2 import GPT2LMHeadModel
 from transformers.modeling_gpt2 import GPT2LMHeadModel
 
 from pplm_classification_head import ClassificationHead
@@ -56,14 +57,17 @@ VERBOSITY_LEVELS = {
 }
 
 BAG_OF_WORDS_ARCHIVE_MAP = {
-    'legal': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/legal.txt",
-    'military': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/military.txt",
+    'computers': "./wordlists/computers.txt",
+    'fantasy': "./wordlists/fantasy.txt",
+    'kitchen': "./wordlists/kitchen.txt",
+    'legal': "./wordlists/legal.txt",
+    'military': "./wordlists/military.txt",
     'monsters': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/monsters.txt",
-    'politics': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/politics.txt",
-    'positive_words': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/positive_words.txt",
-    'religion': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/religion.txt",
-    'science': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/science.txt",
-    'space': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/space.txt",
+    'politics': "./wordlists/politics.txt",
+    'positive_words': "./custom/wordlists/positive_words.txt",
+    'religion': "./wordlists/religion.txt",
+    'science': "./wordlists/science.txt",
+    'space': "./wordlists/space.txt",
     'technology': "https://s3.amazonaws.com/models.huggingface.co/bert/pplm/bow/technology.txt",
 }
 
