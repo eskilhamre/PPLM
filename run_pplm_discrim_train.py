@@ -28,7 +28,7 @@ torch.manual_seed(0)
 np.random.seed(0)
 EPSILON = 1e-10
 example_sentence = "This is incredible! I love it, this is the best chicken I have ever had."
-max_length_seq = 100
+max_length_seq = 130 # 100
 
 
 class Discriminator(torch.nn.Module):
@@ -297,10 +297,10 @@ def get_generic_dataset(dataset_fp, tokenizer, device,
                         )
 
                     else:
-                        print(
-                            "Line {} is longer than maximum length {}".format(
-                                i, max_length_seq
-                            ))
+                        # print(
+                        #     "Line {} is longer than maximum length {}".format(
+                        #         i, max_length_seq
+                        #     ))
                         continue
 
                     x.append(seq)
@@ -309,7 +309,6 @@ def get_generic_dataset(dataset_fp, tokenizer, device,
                 except:
                     print("Error tokenizing line {}, skipping it".format(i))
                     pass
-
     return Dataset(x, y)
 
 
@@ -324,7 +323,8 @@ def train_discriminator(
         save_model=False,
         cached=False,
         no_cuda=False,
-        output_fp='.'
+        output_fp='.',
+        idx2class=None
 ):
     device = "cuda" if torch.cuda.is_available() and not no_cuda else "cpu"
     add_eos_token = pretrained_model.startswith("gpt2")
@@ -400,7 +400,8 @@ def train_discriminator(
         }
 
     elif dataset == "clickbait":
-        idx2class = ["non_clickbait", "clickbait"]
+        if idx2class is None:
+            idx2class = ["non_clickbait", "clickbait"]
         class2idx = {c: i for i, c in enumerate(idx2class)}
 
         discriminator = Discriminator(
@@ -462,7 +463,8 @@ def train_discriminator(
         }
 
     elif dataset == "toxic":
-        idx2class = ["non_toxic", "toxic"]
+        if idx2class is None:
+            idx2class = ["non_toxic", "toxic"]
         class2idx = {c: i for i, c in enumerate(idx2class)}
 
         discriminator = Discriminator(
@@ -521,7 +523,8 @@ def train_discriminator(
             raise ValueError("When generic dataset is selected, "
                              "dataset_fp needs to be specified aswell.")
 
-        idx2class = get_idx2class(dataset_fp)
+        if idx2class is None:
+            idx2class = get_idx2class(dataset_fp)
 
         discriminator = Discriminator(
             class_size=len(idx2class),
@@ -534,6 +537,7 @@ def train_discriminator(
             dataset_fp, discriminator.tokenizer, device,
             idx2class=idx2class, add_eos_token=add_eos_token
         )
+        print("Length of dataset after removing too long sequences:", len(full_dataset))
         train_size = int(0.9 * len(full_dataset))
         test_size = len(full_dataset) - train_size
         train_dataset, test_dataset = torch.utils.data.random_split(
