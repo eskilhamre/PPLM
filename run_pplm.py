@@ -90,6 +90,14 @@ DISCRIMINATOR_MODELS_PARAMS = {
         "default_class": 3,
         "pretrained_model": "gpt2-medium",
     },
+    "news" : {
+        "path": "discrim_models/news_classifierhead.pt",
+        "class_size": 4,
+        "embed_size": 1024,
+        "class_vocab": {"world": 0, "sports": 1, "business": 2, "sci/tech": 3},
+        "default_class": 0,
+        "pretrained_model": "gpt2-medium",
+    }
 }
 
 
@@ -888,7 +896,7 @@ if __name__ == '__main__':
         "-D",
         type=str,
         default=None,
-        choices=("clickbait", "sentiment", "toxicity", "generic"),
+        choices=("clickbait", "sentiment", "toxicity", "news", "generic"),
         help="Discriminator to use",
     )
     parser.add_argument('--discrim_weights', type=str, default=None,
