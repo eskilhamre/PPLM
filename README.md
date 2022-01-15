@@ -2,7 +2,7 @@
 Plug and Play Language Model implementation. Allows to steer topic and attributes of generated text of GPT-2 models.
 
 # Introduction
-This contains the code of my final project for a graduate-level Natural language processing course at UiB (course code INF368A, Fall 2021). It's just a simplefied version of the original [PPLM repo](https://github.com/uber-research/PPLM), containing all the necessary code to steer language generation in a simple manner. I've added another discriminator model trained on the AG news dataset. With this, the technology can be used to steer language generation into any of the following topics: **global, sports, business and sci/tech.**  
+This contains the code of my final project for a graduate-level Natural language processing course at UiB (course code INF368A, Fall 2021). It's just a simplefied version of the original [PPLM repo](https://github.com/uber-research/PPLM), containing all the necessary code to steer language generation in a simple manner. I've added another discriminator model trained on the [AG news dataset](https://www.kaggle.com/amananandrai/ag-news-classification-dataset), a dataset consisting of news articles labelled wrt. the article topic. With this, we can steer language generation into any of the following topics: **global news, sports, business and sci/tech.**  
 
 # Technologies
 - PyTorch
